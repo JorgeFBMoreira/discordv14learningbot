@@ -63,7 +63,7 @@ const banCommand = new SlashCommandBuilder()
                     )
             )
     )
-
+    
     
 
 export default banCommand.toJSON();
