@@ -1,6 +1,6 @@
 import { config } from 'dotenv';
-import { Client, GatewayIntentBits, InteractionType, REST, Routes, TextInputStyle } from 'discord.js';
-import { ActionRowBuilder, ModalBuilder, SelectMenuBuilder, TextInputBuilder } from '@discordjs/builders';
+import { ButtonStyle, Client, GatewayIntentBits, InteractionType, REST, Routes, TextInputStyle } from 'discord.js';
+import { ActionRowBuilder, ButtonBuilder, ModalBuilder, SelectMenuBuilder, TextInputBuilder } from '@discordjs/builders';
 
 import orderCommand from './commands/order.js';
 import rolesCommand from './commands/roles.js';
@@ -8,6 +8,7 @@ import usersCommand from './commands/users.js';
 import channelsCommand from './commands/channel.js';
 import banCommand from './commands/ban.js';
 import registerCommand from './commands/register.js';
+import buttonCommand from './commands/button.js';
 config();
 
 
@@ -23,14 +24,37 @@ const client = new Client({
         GatewayIntentBits.MessageContent,
     ],
 });
-
 const rest = new REST({ version: '10' }).setToken(TOKEN);   
 
 
 
 client.on('ready', () => {
     console.log(`${client.user.username} has logged in.`);
-})
+});
+
+client.on('messageCreate', (m) => {
+    if(m.author.bot) return;
+
+    m.channel.send({
+        content: 'Hello, World!',
+        components: [
+            new ActionRowBuilder().setComponents(
+                new ButtonBuilder()
+                    .setCustomId('button3')
+                    .setLabel('Button 3')
+                    .setStyle(ButtonStyle.Primary),
+                new ButtonBuilder()
+                    .setCustomId('button4')
+                    .setLabel('Button 4')
+                    .setStyle(ButtonStyle.Secondary),
+                new ButtonBuilder()
+                    .setLabel('Link Button')
+                    .setStyle(ButtonStyle.Link)
+                    .setURL('https://osu.ppy.sh/users/12599585'),
+            )
+        ]
+    })
+});
 
 client.on('interactionCreate', (interaction) => {
     if (interaction.isChatInputCommand()) {
@@ -90,6 +114,27 @@ client.on('interactionCreate', (interaction) => {
                 );
           
             interaction.showModal(modal)
+        }
+        else if(interaction.commandName === 'button') {
+            interaction.reply({
+                content: 'Button!',
+                components: [
+                    new ActionRowBuilder().setComponents(
+                        new ButtonBuilder()
+                            .setCustomId('button1')
+                            .setLabel('Button 1')
+                            .setStyle(ButtonStyle.Primary),
+                        new ButtonBuilder()
+                            .setCustomId('button2')
+                            .setLabel('Button 2')
+                            .setStyle(ButtonStyle.Secondary),
+                        new ButtonBuilder()
+                            .setLabel('Link Button')
+                            .setStyle(ButtonStyle.Link)
+                            .setURL('https://osu.ppy.sh/users/12599585'),
+                    )
+                ]
+            })
         };
     }
 
@@ -109,6 +154,15 @@ client.on('interactionCreate', (interaction) => {
                 content: `Username: ${interaction.fields.fields.get('username').value}\nUsername: ${interaction.fields.getTextInputValue('username')}`
             })
         }
+    }
+
+    else if(interaction.isButton()){
+        console.log('Button Interaction');
+        console.log(interaction);
+        
+        interaction.reply({
+            content: 'Thanks for clicking on the Button.'
+        });
     };
 });
 
@@ -120,7 +174,8 @@ async function main() {
         usersCommand, 
         channelsCommand,
         banCommand,
-        registerCommand
+        registerCommand,
+        buttonCommand
     ];
 
     try{
