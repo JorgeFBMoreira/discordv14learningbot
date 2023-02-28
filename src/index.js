@@ -136,6 +136,7 @@ client.on('interactionCreate', (interaction) => {
                 ]
             })
         };
+
     }
 
     else if(interaction.isStringSelectMenu()) {
@@ -163,6 +164,28 @@ client.on('interactionCreate', (interaction) => {
         interaction.reply({
             content: 'Thanks for clicking on the Button.'
         });
+    }
+
+    else if(interaction.isUserContextMenuCommand()) {
+        if(interaction.commandName === 'Report') {
+            interaction.reply({
+                content: `You reported ${interaction.targetMember}.`
+            });
+        }
+
+        else if(interaction.commandName === 'Wave') {
+            interaction.reply({
+                content: `You waved to ${interaction.targetMember}.`
+            });
+        }
+    }
+    
+    else if(interaction.isMessageContextMenuCommand()) {
+        if(interaction.commandName === 'Report Message') {
+            interaction.reply({
+                content: `You reported the message ${interaction.targetMessage}.`
+            });
+        }
     };
 });
 
@@ -175,7 +198,19 @@ async function main() {
         channelsCommand,
         banCommand,
         registerCommand,
-        buttonCommand
+        buttonCommand,
+        {
+            name: 'Wave',
+            type: 2
+        },
+        {
+            name: 'Report',
+            type: 2
+        },
+        {
+            name: 'Report Message',
+            type: 3
+        }
     ];
 
     try{
