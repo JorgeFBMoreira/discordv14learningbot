@@ -27,9 +27,9 @@ client.subCommands = new Collection();
 client.commands    = new Collection();
 
 const { connect } = require('mongoose');
-connect(MONGODB_URL, {
-}).then(() => console.log("The client is now connected to the database"))
-.catch((err) => console.log(err));
+connect(MONGODB_URL, {})
+    .then(() => console.log("The client is now connected to the database"))
+    .catch((err) => console.log(err));
 
 loadEvents(client);
 

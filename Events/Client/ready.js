@@ -1,5 +1,7 @@
 const { loadCommands } = require('../../Handlers/commandHandler.js');
 
+
+
 module.exports = {
     name: 'ready',
     once: true,
