@@ -10,21 +10,3 @@ async function loadFiles(dirName) {
 }
 
 module.exports = { loadFiles };
-
-/*
-
-import * as path from 'path';
-import glob from 'glob-promise';
-
-// const dir = path.dirname(__dirname);
-const txtURL = path.resolve('folder-area', '*.txt');
-const testURL = './folder-area/*.txt';
-
-const returnTxtFiles = async () => {
-const txtFiles = await glob(testURL);
-console.log(txtFiles);
-};
-
-returnTxtFiles();
-
-*/

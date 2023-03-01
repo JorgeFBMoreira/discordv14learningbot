@@ -1,7 +1,10 @@
 const { ChatInputCommandInteraction } = require('discord.js');
 
+
+
 module.exports = {
     name: 'interactionCreate',
+
     /**
      * 
      * @param {ChatInputCommandInteraction} interaction 
@@ -21,6 +24,17 @@ module.exports = {
             ephemeral: true
         });
 
-        command.execute(interaction, client);
+        const subCommand = interaction.options.getSubcommand();
+
+        if(subCommand) {
+            const subCommandFile = client.subCommands.get(`${interaction.commandName}.${subCommand}`);
+
+            if(!subCommandFile) return interaction.reply({
+                content: "This sub command is outdated.",
+                ephemeral: true
+            });
+
+            subCommandFile.execute(interaction, client)
+        } else command.execute(interaction, client);
     }
 };

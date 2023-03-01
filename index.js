@@ -22,12 +22,14 @@ const client = new Client({
 });
 
 const { loadEvents } = require('./Handlers/eventHandler.js'); 
-client.events = new Collection();
-client.commands = new Collection();
+client.events      = new Collection();
+client.subCommands = new Collection();
+client.commands    = new Collection();
 
 const { connect } = require('mongoose');
 connect(MONGODB_URL, {
-}).then(() => console.log("The client is now connected to the database"));
+}).then(() => console.log("The client is now connected to the database"))
+.catch((err) => console.log(err));
 
 loadEvents(client);
 
