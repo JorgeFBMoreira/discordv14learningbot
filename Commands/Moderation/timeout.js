@@ -37,7 +37,7 @@ module.exports = {
         const duration = options.getString('duration');
         const reason   = options.getString('reason') || 'None specified.';
 
-        const errorArray = [];
+        const errorArray  = [];
         const errorsEmbed = new EmbedBuilder()
             .setAuthor({
                 name: 'Could not timeout member due to'

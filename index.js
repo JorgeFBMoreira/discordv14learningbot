@@ -21,17 +21,25 @@ const client = new Client({
     ]
 });
 
-const { loadEvents } = require('./Handlers/eventHandler.js'); 
-client.events      = new Collection();
-client.subCommands = new Collection();
 client.commands    = new Collection();
+client.subCommands = new Collection();
+client.events      = new Collection();
+client.guildConfig = new Collection();
+
+
 
 const { connect } = require('mongoose');
 connect(MONGODB_URL, {})
-    .then(() => console.log("The client is now connected to the database"))
-    .catch((err) => console.log(err));
+.then(() => console.log("The client is now connected to the database"))
+.catch((err) => console.log(err));
 
+
+
+const { loadEvents } = require('./Handlers/eventHandler.js'); 
 loadEvents(client);
+
+const { loadConfig } = require('./Functions/configLoader.js');
+loadConfig(client);
 
 
 
