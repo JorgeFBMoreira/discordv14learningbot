@@ -13,8 +13,9 @@ Following online tutorials and sources. All of them will be linked in this docum
 - ascii-table
 - mongoose
 - ms
+- moment
+- discord-html-transcripts
 - Dotenv (development)
-
 
 
 ## Tutorials, sources and online material used in this project
